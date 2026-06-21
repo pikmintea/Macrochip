@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "macrochip:block/chemical_reactor"
+    }
+  }
+}

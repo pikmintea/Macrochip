@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "macrochip:block/extreme_precision_laser"
+    }
+  }
+}

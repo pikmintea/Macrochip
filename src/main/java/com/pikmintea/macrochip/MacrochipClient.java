@@ -1,31 +1,134 @@
 package com.pikmintea.macrochip;
 
-import net.minecraft.client.Minecraft;
+import com.pikmintea.macrochip.fluid.ModFluidTypes;
+import com.pikmintea.macrochip.fluid.ModFluids;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.gui.ConfigurationScreen;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
-// This class will not load on dedicated servers. Accessing client side code from here is safe.
-@Mod(value = Macrochip.MODID, dist = Dist.CLIENT)
-// You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
 @EventBusSubscriber(modid = Macrochip.MODID, value = Dist.CLIENT)
 public class MacrochipClient {
-    public MacrochipClient(ModContainer container) {
-        // Allows NeoForge to create a config screen for this mod's configs.
-        // The config screen is accessed by going to the Mods screen > clicking on your mod > clicking on config.
-        // Do not forget to add translations for your config options to the en_us.json file.
-        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+
+    @SubscribeEvent
+    public static void onClientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.HYDROGEN_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.OXYGEN_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.CHLORINE_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.HYDROGEN_CHLORIDE_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.CARBON_MONOXIDE_GAS.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.TRICHLOROSILANE_SOURCE.get(), RenderType.translucent());
+        });
     }
 
     @SubscribeEvent
-    static void onClientSetup(FMLClientSetupEvent event) {
-        // Some client setup code
-        Macrochip.LOGGER.info("HELLO FROM CLIENT SETUP");
-        Macrochip.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+    public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
+        event.registerFluidType(new IClientFluidTypeExtensions() {
+            @Override
+            public ResourceLocation getStillTexture() {
+                return ResourceLocation.fromNamespaceAndPath(Macrochip.MODID, "block/hydrogen_gas_still");
+            }
+
+            @Override
+            public ResourceLocation getFlowingTexture() {
+                return ResourceLocation.fromNamespaceAndPath(Macrochip.MODID, "block/hydrogen_gas_flow");
+            }
+
+            @Override
+            public int getTintColor() {
+                return 0x50C8E8FF;
+            }
+        }, ModFluidTypes.HYDROGEN_GAS.get());
+
+        event.registerFluidType(new IClientFluidTypeExtensions() {
+            @Override
+            public ResourceLocation getStillTexture() {
+                return ResourceLocation.fromNamespaceAndPath(Macrochip.MODID, "block/oxygen_gas_still");
+            }
+
+            @Override
+            public ResourceLocation getFlowingTexture() {
+                return ResourceLocation.fromNamespaceAndPath(Macrochip.MODID, "block/oxygen_gas_flow");
+            }
+
+            @Override
+            public int getTintColor() {
+                return 0x50B8D8FF;
+            }
+        }, ModFluidTypes.OXYGEN_GAS.get());
+
+        event.registerFluidType(new IClientFluidTypeExtensions() {
+            @Override
+            public ResourceLocation getStillTexture() {
+                return ResourceLocation.fromNamespaceAndPath(Macrochip.MODID, "block/chlorine_gas_still");
+            }
+
+            @Override
+            public ResourceLocation getFlowingTexture() {
+                return ResourceLocation.fromNamespaceAndPath(Macrochip.MODID, "block/chlorine_gas_flow");
+            }
+
+            @Override
+            public int getTintColor() {
+                return 0x50D0FFA0;
+            }
+        }, ModFluidTypes.CHLORINE_GAS.get());
+
+        event.registerFluidType(new IClientFluidTypeExtensions() {
+            @Override
+            public ResourceLocation getStillTexture() {
+                return ResourceLocation.fromNamespaceAndPath(Macrochip.MODID, "block/hydrogen_chloride_gas_still");
+            }
+
+            @Override
+            public ResourceLocation getFlowingTexture() {
+                return ResourceLocation.fromNamespaceAndPath(Macrochip.MODID, "block/hydrogen_chloride_gas_flow");
+            }
+
+            @Override
+            public int getTintColor() {
+                return 0x50F0FFA0;
+            }
+        }, ModFluidTypes.HYDROGEN_CHLORIDE_GAS.get());
+
+        event.registerFluidType(new IClientFluidTypeExtensions() {
+            @Override
+            public ResourceLocation getStillTexture() {
+                return ResourceLocation.fromNamespaceAndPath(Macrochip.MODID, "block/carbon_monoxide_gas_still");
+            }
+
+            @Override
+            public ResourceLocation getFlowingTexture() {
+                return ResourceLocation.fromNamespaceAndPath(Macrochip.MODID, "block/carbon_monoxide_gas_flow");
+            }
+
+            @Override
+            public int getTintColor() {
+                return 0x50D0D0D0;
+            }
+        }, ModFluidTypes.CARBON_MONOXIDE_GAS.get());
+
+        event.registerFluidType(new IClientFluidTypeExtensions() {
+            @Override
+            public ResourceLocation getStillTexture() {
+                return ResourceLocation.fromNamespaceAndPath(Macrochip.MODID, "block/trichlorosilane_still");
+            }
+
+            @Override
+            public ResourceLocation getFlowingTexture() {
+                return ResourceLocation.fromNamespaceAndPath(Macrochip.MODID, "block/trichlorosilane_flow");
+            }
+
+            @Override
+            public int getTintColor() {
+                return 0xFFA0E8E8;
+            }
+        }, ModFluidTypes.TRICHLOROSILANE.get());
     }
 }

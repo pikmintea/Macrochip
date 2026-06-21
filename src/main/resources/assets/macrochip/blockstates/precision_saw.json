@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "macrochip:block/precision_saw"
+    }
+  }
+}

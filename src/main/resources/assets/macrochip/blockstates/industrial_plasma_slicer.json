@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "macrochip:block/industrial_plasma_slicer"
+    }
+  }
+}
